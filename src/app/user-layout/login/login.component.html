@@ -1,15 +1,32 @@
 <div class="d-flex align-items-center justify-content-center h-100">
-  <form class="login-form">
-    <mat-form-field class="username w-100">
-      <mat-label>Username</mat-label>
-      <input matInput placeholder="Alex" />
-    </mat-form-field>
-    <mat-form-field class="password w-100">
-      <mat-label>Password</mat-label>
-      <input matNativeControl type="password" />
-    </mat-form-field>
-    <div class="w-100">
-      <button mat-button class="d-inline-flex ms-auto">Login</button>
-    </div>
-  </form>
+  <mat-card class="border shadow p-3">
+    <mat-card-content>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Login user"
+        fontIcon="person"
+        class="icon-login-user mx-auto d-block my-4"
+      ></mat-icon>
+      <form class="login-form">
+        <mat-form-field class="username w-100">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="Alex" />
+        </mat-form-field>
+        <mat-form-field class="password w-100">
+          <mat-label>Password</mat-label>
+          <input matNativeControl type="password" />
+        </mat-form-field>
+        <div class="w-100 text-end">
+          <button
+            mat-raised-button
+            color="primary"
+            class="d-inline-flex ms-auto"
+            (click)="login()"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
