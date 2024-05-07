@@ -16,6 +16,7 @@ import { GlobalService } from '../../../global.service';
 export class ByDateComponent implements OnInit {
   years: any;
   toggleDates = false;
+  productData: any = [];
 
   constructor(private apiService: ApiService, private global: GlobalService) {}
   url = environment.apiUrl;
@@ -44,5 +45,20 @@ export class ByDateComponent implements OnInit {
   closeDate(item: any) {
     this.years.forEach((x: any) => (x.show = false));
     item.show = false;
+  }
+
+  fetchData(date: string) {
+    console.log(date);
+    this.years.forEach((x: any) => (x.show = false));
+    this.toggleDates = false;
+    this.apiService
+      .postData(this.url + 'grocery/by-date', { date })
+      .subscribe((response) => {
+        const result = response.data;
+        console.log(result);
+        if (response.status === 200) {
+          this.productData = result;
+        }
+      });
   }
 }

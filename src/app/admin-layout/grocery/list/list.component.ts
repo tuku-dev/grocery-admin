@@ -14,7 +14,7 @@ import { GlobalService } from '../../../global.service';
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit {
-  productData: any = [Object];
+  productData: any = [];
   totalRecord = 0;
   page = 1;
   recordsPerPage = 10;

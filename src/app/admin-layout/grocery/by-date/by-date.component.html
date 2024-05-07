@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center justify-content-between mb-3">
   <h1 class="page-heading h1 text-capitalize mb-3">grocery list by date</h1>
 
   <div class="grocery-by-date-container">
@@ -27,6 +27,7 @@
           <div
             class="dates-item shadow-sm px-2 py-1"
             *ngFor="let date of item.dates"
+            (click)="fetchData(date)"
           >
             {{ date | date : "mediumDate" }}
           </div>
@@ -35,3 +36,27 @@
     </div>
   </div>
 </div>
+
+<!-- Grocery listing -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>#SLNO</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of productData; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.dateOfPurchase | date : "mediumDate" }}</td>
+      <td>{{ item.productData?.productName }}</td>
+      <td>{{ item.quantity }} {{ item.unit }}</td>
+      <td>{{ item.totalPrice }}</td>
+      <td>Action</td>
+    </tr>
+  </tbody>
+</table>
