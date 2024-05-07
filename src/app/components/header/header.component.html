@@ -1,1 +1,15 @@
-<p>header works!</p>
+<mat-toolbar>
+  <mat-menu #rootMenu="matMenu">
+    <button mat-menu-item>Account <mat-icon>account_circle</mat-icon></button>
+    <button mat-menu-item>Logout <mat-icon>logout</mat-icon></button>
+    <button mat-menu-item>Change Password <mat-icon>key</mat-icon></button>
+  </mat-menu>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="rootMenu"
+    class="ms-sm-auto border-0 bg-transparent"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
+</mat-toolbar>

@@ -1,9 +1,23 @@
-<div class="wrapper">
-  <div class="sidebar">
+<mat-sidenav-container class="wrapper h-100">
+  <mat-sidenav class="sidebar" mode="side" [(opened)]="opened">
     <app-sidebar />
-  </div>
-  <div class="main">
+  </mat-sidenav>
+  <mat-sidenav-content class="main">
+    <button
+      mat-stroked-button
+      class="border-0 bg-transparent d-flex align-items-center justify-content-center sidebar-toggler radius"
+      (click)="opened = !opened"
+    >
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="{{ opened ? 'menu' : 'close' }}"
+      ></mat-icon>
+    </button>
     <app-header />
-    <router-outlet />
-  </div>
-</div>
+    <mat-divider></mat-divider>
+    <div class="work-area p-3">
+      <router-outlet />
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

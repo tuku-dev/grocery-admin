@@ -1,0 +1,27 @@
+.mat-mdc-button {
+  border-radius: 0 !important;
+  min-width: 100%;
+  max-width: unset !important;
+}
+.menu-section {
+  .menu-item {
+    cursor: pointer;
+    display: block;
+    padding: 8px 15px;
+    border-bottom: 1px solid #ddd;
+    &:hover {
+      background-color: #ddd;
+      color: #666;
+    }
+  }
+  .menu-header {
+    .menu-item {
+    }
+  }
+  .menu-body {
+    .menu-item {
+      margin-left: 15px;
+      border-left: 1px solid #ddd;
+    }
+  }
+}

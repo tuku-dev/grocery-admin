@@ -1,0 +1,24 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 8px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+  }
+  .page-number {
+    min-width: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 5px 8px;
+  }
+}

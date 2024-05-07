@@ -1,1 +1,32 @@
-<p>sidebar works!</p>
+<app-logo />
+<mat-divider></mat-divider>
+<div class="side-navigation">
+  <div class="menu-section">
+    <span class="menu-item" [routerLink]="['/dashboard']">Dashboard</span>
+  </div>
+  <div class="menu-section">
+    <div class="menu-header" (click)="toggleMenu('product')">
+      <span class="menu-item">Product</span>
+    </div>
+    <div class="menu-body" *ngIf="openMenu === 'product' && clicked !== 0">
+      <span class="menu-item" [routerLink]="['/product/list']"
+        >List Products</span
+      >
+      <span class="menu-item" [routerLink]="['/product/add']">Add Product</span>
+    </div>
+  </div>
+  <div class="menu-section">
+    <div class="menu-header" (click)="toggleMenu('grocery')">
+      <span class="menu-item">Grocery</span>
+    </div>
+    <div class="menu-body" *ngIf="openMenu === 'grocery' && clicked !== 0">
+      <span class="menu-item" [routerLink]="['/grocery/add']">Add Grocery</span>
+      <span class="menu-item" [routerLink]="['/grocery/list']"
+        >List Grocery</span
+      >
+      <span class="menu-item" [routerLink]="['/grocery/by-date']"
+        >Grocery By Date</span
+      >
+    </div>
+  </div>
+</div>

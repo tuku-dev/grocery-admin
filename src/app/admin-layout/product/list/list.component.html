@@ -1,0 +1,52 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>#SLNO</th>
+      <th>Name</th>
+      <th>Tags</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of productData">
+      <td>{{ item.slno }}</td>
+      <td>{{ item.productName }}</td>
+      <td>{{ item.tags }}</td>
+      <td>{{ item.description }}</td>
+      <td>Action</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul class="pagination">
+  <li
+    class="first pagination-item"
+    [ngClass]="{ disabled: page === 1 }"
+    (click)="fetchPage('first')"
+  >
+    First
+  </li>
+  <li
+    class="prev pagination-item"
+    [ngClass]="{ disabled: page === 1 }"
+    (click)="fetchPage('prev')"
+  >
+    Previous
+  </li>
+  <li class="page-number">{{ page }}</li>
+  <li
+    class="next pagination-item"
+    [ngClass]="{ disabled: page === pager }"
+    (click)="fetchPage('next')"
+  >
+    Next
+  </li>
+  <li
+    class="last pagination-item"
+    [ngClass]="{ disabled: page === pager }"
+    (click)="fetchPage('last')"
+  >
+    Last
+  </li>
+</ul>
