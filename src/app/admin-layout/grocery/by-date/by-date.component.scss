@@ -1,0 +1,63 @@
+.grocery-by-date-container {
+  position: relative;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
+  * {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none;
+  }
+  .grocery-by-date {
+    width: 300px;
+    cursor: pointer;
+  }
+  .date-dropdown {
+    max-width: 300px;
+    position: absolute;
+    right: 0;
+
+    .year-item {
+      cursor: pointer;
+    }
+    .dates {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 370px;
+      left: auto;
+      background: var(--bs-white);
+      .close-dates {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+        background: var(--bs-danger);
+        border-radius: 3px;
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          width: 80%;
+          background-color: var(--bs-white);
+          transform: rotate(45deg);
+          margin: auto;
+        }
+        &::after {
+          transform: rotate(-45deg);
+        }
+      }
+      .dates-item {
+        width: 30%;
+        cursor: pointer;
+      }
+    }
+  }
+}

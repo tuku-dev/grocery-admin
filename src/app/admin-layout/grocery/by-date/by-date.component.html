@@ -1,1 +1,37 @@
-<p>by-date works!</p>
+<div class="d-flex align-items-center justify-content-between">
+  <h1 class="page-heading h1 text-capitalize mb-3">grocery list by date</h1>
+
+  <div class="grocery-by-date-container">
+    <div
+      class="grocery-by-date card border px-3 py-2 ms-auto"
+      (click)="toggleDates = !toggleDates"
+    >
+      Grocery By Date
+    </div>
+    <div
+      class="date-dropdown d-flex align-items-center justify-content-start gap-3 card flex-row flex-wrap p-3 ms-auto border"
+      *ngIf="toggleDates"
+    >
+      <div class="years-list" *ngFor="let item of years">
+        <div
+          class="year-item px-2 py-1 shadow-sm"
+          (click)="toggleDatesList(item)"
+        >
+          {{ item.year }}
+        </div>
+        <div
+          class="dates card p-3 d-flex align-items-start justify-content-start flex-wrap gap-3 flex-row border"
+          *ngIf="item.show"
+        >
+          <span class="close-dates" (click)="closeDate(item)"></span>
+          <div
+            class="dates-item shadow-sm px-2 py-1"
+            *ngFor="let date of item.dates"
+          >
+            {{ date | date : "mediumDate" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
