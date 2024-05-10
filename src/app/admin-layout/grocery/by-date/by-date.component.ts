@@ -17,6 +17,7 @@ export class ByDateComponent implements OnInit {
   years: any;
   toggleDates = false;
   productData: any = [];
+  totalAmount = 0;
 
   constructor(private apiService: ApiService, private global: GlobalService) {}
   url = environment.apiUrl;
@@ -31,7 +32,6 @@ export class ByDateComponent implements OnInit {
       .subscribe((response) => {
         const result = response.data;
         if (response.status === 200) {
-          console.log(result);
           result.forEach((x: any) => (x.show = false));
           this.years = result;
         }
@@ -56,6 +56,13 @@ export class ByDateComponent implements OnInit {
       .subscribe((response) => {
         const result = response.data;
         console.log(result);
+
+        const sum = 0;
+        this.totalAmount = result.reduce(
+          (a: any, c: any) => a + c.totalPrice,
+          sum
+        );
+
         if (response.status === 200) {
           this.productData = result;
         }
