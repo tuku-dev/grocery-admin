@@ -1,13 +1,13 @@
 <h1 class="page-heading h1 text-capitalize mb-3">grocery list</h1>
-<table class="table">
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th>#SLNO</th>
+      <th class="slno">#SLNO</th>
       <th>Date</th>
       <th>Name</th>
       <th>Quantity</th>
       <th>Price</th>
-      <th>Action</th>
+      <th class="text-end">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,7 @@
       <td>{{ item.productData?.productName }}</td>
       <td>{{ item.quantity }} {{ item.unit }}</td>
       <td>{{ item.totalPrice }}</td>
-      <td>Action</td>
+      <td class="text-end">Action</td>
     </tr>
   </tbody>
 </table>

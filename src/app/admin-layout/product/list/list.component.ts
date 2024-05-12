@@ -1,14 +1,39 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../../api.service';
 import { GlobalService } from '../../../global.service';
+import { AddComponentModal } from '../add/add.component.modal';
 import { environment } from './../../../../../env/environment';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [HttpClientModule, CommonModule],
+  imports: [
+    HttpClientModule,
+    CommonModule,
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   providers: [ApiService],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -19,9 +44,15 @@ export class ListComponent implements OnInit {
   page = 1;
   recordsPerPage = 10;
   pager = 0;
-  fetchData: Object = {};
+  fetchData: any;
+  filter = '';
 
-  constructor(private apiService: ApiService, private global: GlobalService) {}
+  constructor(
+    private apiService: ApiService,
+    private global: GlobalService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {}
   url = environment.apiUrl;
 
   ngOnInit(): void {
@@ -60,6 +91,29 @@ export class ListComponent implements OnInit {
       perPage: this.recordsPerPage,
     };
 
+    this.fetchApi(this.fetchData);
+  }
+
+  openAddProductForm() {
+    let dialogRef = this.dialog.open(AddComponentModal, {
+      height: '400px',
+      width: '600px',
+      data: { name: 'hello', age: 'world' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.status) {
+        this.fetchPage('first');
+        this._snackBar.open('Product Created', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['bg-success'],
+        });
+      }
+    });
+  }
+
+  searchProduct() {
+    this.fetchData.productName = this.filter;
     this.fetchApi(this.fetchData);
   }
 }

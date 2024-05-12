@@ -35,3 +35,11 @@ body {
     padding: 5px 8px;
   }
 }
+
+.bg-success .mdc-snackbar__surface {
+  background-color: var(--bs-green) !important;
+}
+
+.table .slno {
+  width: 70px;
+}

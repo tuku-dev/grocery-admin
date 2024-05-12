@@ -1,0 +1,56 @@
+<h1 mat-dialog-title class="page-heading h1 text-capitalize mb-3">
+  Add product
+</h1>
+
+<mat-dialog-content>
+  <form class="adding-form" [formGroup]="addProductForm">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-3">
+        <label for="productName" class="form-label">Product Name</label>
+        <input
+          id="productName"
+          name="productName"
+          class="form-control control-input"
+          [ngClass]="{ 'is-invalid': submitted && f.productName.value === '' }"
+          formControlName="productName"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="submitted && f.productName.value === ''"
+        >
+          Product name is required
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <label for="tags" class="form-label">Form Tags</label>
+        <input
+          id="tags"
+          name="tags"
+          class="form-control control-input"
+          formControlName="tags"
+        />
+      </div>
+      <div class="col-12 mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control control-textarea"
+          formControlName="description"
+        ></textarea>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div
+    class="col-12 d-flex justify-content-center justify-content-md-end gap-3"
+  >
+    <button class="btn btn-primary" (click)="formSubmit()">Add Product</button>
+    <button class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+  </div>
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>
+    Ok
+  </button> -->
+</mat-dialog-actions>
