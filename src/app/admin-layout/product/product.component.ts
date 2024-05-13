@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product',
@@ -33,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
   ],
   providers: [ApiService],
   templateUrl: './product.component.html',
@@ -46,6 +48,9 @@ export class ProductComponent {
   pager = 0;
   fetchData: any;
   filter = '';
+  openAction = '';
+  prevAction = '';
+  clicked = 0;
 
   constructor(
     private apiService: ApiService,
@@ -114,5 +119,16 @@ export class ProductComponent {
   searchProduct() {
     this.fetchData.productName = this.filter;
     this.fetchApi(this.fetchData);
+  }
+
+  toggleAction(id: string) {
+    this.openAction = id;
+    if (this.prevAction === id) {
+      this.clicked = 0;
+      this.prevAction = '';
+    } else {
+      this.clicked = 1;
+      this.prevAction = id;
+    }
   }
 }

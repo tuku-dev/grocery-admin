@@ -43,3 +43,40 @@ body {
 .table .slno {
   width: 70px;
 }
+.pointer {
+  cursor: pointer !important;
+}
+
+.actions {
+  position: relative;
+  .action-buttons {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: max-content;
+    right: 50px;
+    .btn {
+      border-radius: 0;
+      outline: 0;
+      box-shadow: none;
+      color: var(--bs-white);
+      &.btn-view {
+        background-color: var(--bs-orange);
+      }
+      &.btn-edit {
+        background-color: var(--bs-info);
+      }
+      &.btn-delete {
+        background-color: var(--bs-danger);
+      }
+      &:hover {
+        &.btn-view,
+        &.btn-edit,
+        &.btn-delete {
+          background-color: var(--bs-dark);
+        }
+      }
+    }
+  }
+}
