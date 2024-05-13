@@ -5,15 +5,7 @@
     <span class="menu-item" [routerLink]="['/dashboard']">Dashboard</span>
   </div>
   <div class="menu-section">
-    <div class="menu-header" (click)="toggleMenu('product')">
-      <span class="menu-item">Product</span>
-    </div>
-    <div class="menu-body" *ngIf="openMenu === 'product' && clicked !== 0">
-      <span class="menu-item" [routerLink]="['/product/list']"
-        >List Products</span
-      >
-      <span class="menu-item" [routerLink]="['/product/add']">Add Product</span>
-    </div>
+    <span class="menu-item" [routerLink]="['/products']">Products</span>
   </div>
   <div class="menu-section">
     <div class="menu-header" (click)="toggleMenu('grocery')">
