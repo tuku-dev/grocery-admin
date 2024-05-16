@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { ViewComponent } from './view/view.component';
 
 @Component({
   selector: 'app-product',
@@ -101,8 +102,11 @@ export class ProductComponent {
 
   openAddProductForm() {
     let dialogRef = this.dialog.open(AddComponent, {
-      height: '400px',
+      height: 'auto',
       width: '600px',
+      data: {
+        title: 'Add',
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.status && result.status !== undefined) {
@@ -131,4 +135,35 @@ export class ProductComponent {
       this.prevAction = id;
     }
   }
+  viewProduct(item: any) {
+    this.dialog.open(ViewComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {
+        title: 'View',
+        item,
+      },
+    });
+  }
+  editProduct(item: any) {
+    let dialogRef = this.dialog.open(AddComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {
+        title: 'Update',
+        item,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.status && result.status !== undefined) {
+        this.fetchPage('first');
+        this._snackBar.open('Product Updated', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['bg-success'],
+        });
+      }
+    });
+  }
+  deleteProduct(item: any) {}
 }

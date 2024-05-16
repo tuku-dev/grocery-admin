@@ -1,0 +1,31 @@
+<h1 mat-dialog-title class="page-heading h1 text-capitalize mb-3 border-bottom">
+  {{ this.data.title }} product
+</h1>
+
+<mat-dialog-content>
+  <ul class="product-data d-flex flex-column">
+    <li class="item-row">
+      <div class="left">Name</div>
+      <div class="right">{{ data.item.productName }}</div>
+    </li>
+    <li class="item-row">
+      <div class="left">Tags</div>
+      <div class="right">{{ data.item.tags }}</div>
+    </li>
+    <li class="item-row">
+      <div class="left">Description</div>
+      <div class="right">{{ data.item.description }}</div>
+    </li>
+    <li class="item-row">
+      <div class="left">Date of create</div>
+      <div class="right">{{ data.item.createdAt | date : "mediumDate" }}</div>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div
+    class="col-12 d-flex justify-content-center justify-content-md-end gap-3"
+  >
+    <button class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+  </div>
+</mat-dialog-actions>

@@ -1,0 +1,17 @@
+.product-data {
+  list-style-type: none;
+  padding: 0;
+  .item-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px;
+    .left {
+      font-weight: bold;
+      &::after {
+        content: ":";
+        margin-right: 5px;
+      }
+    }
+  }
+}

@@ -1,4 +1,39 @@
-<h1 class="page-heading h1 text-capitalize mb-3">grocery list</h1>
+<div class="d-flex align-items-center justify-content-between">
+  <h1 class="page-heading h1 text-capitalize mb-3">grocery list</h1>
+  <div
+    class="nav-section d-flex align-items-center justify-content-end gap-3 mb-3"
+  >
+    <button
+      class="btn bg-danger bg-opacity-50 shadow-sm text-white"
+      (click)="openAddGroceryForm()"
+    >
+      Add Grocery
+    </button>
+    <div
+      class="search-product d-flex align-items-center justify-content-start gap-3"
+    >
+      <input
+        type="text"
+        placeholder="Search"
+        class="form-control"
+        [(ngModel)]="filter"
+      />
+      <button
+        class="btn btn-filter bg-danger bg-opacity-50 text-white"
+        (click)="searchProduct()"
+      >
+        Filter
+      </button>
+      <button
+        class="btn btn-clear btn-secondary"
+        *ngIf="filter !== ''"
+        (click)="clear(); filter = ''"
+      >
+        Clear
+      </button>
+    </div>
+  </div>
+</div>
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
@@ -22,7 +57,7 @@
   </tbody>
 </table>
 
-<ul class="pagination">
+<ul class="pagination" *ngIf="totalRecord > 10">
   <li
     class="first pagination-item"
     [ngClass]="{ disabled: page === 1 }"

@@ -1,10 +1,10 @@
-<h1 mat-dialog-title class="page-heading h1 text-capitalize mb-3">
-  Add product
+<h1 mat-dialog-title class="page-heading h1 text-capitalize mb-3 border-bottom">
+  {{ this.data.title }} product
 </h1>
 
 <mat-dialog-content>
   <form class="adding-form" [formGroup]="addProductForm">
-    <div class="row">
+    <div class="row mx-0">
       <div class="col-12 col-md-6 mb-3">
         <label for="productName" class="form-label">Product Name</label>
         <input
@@ -46,7 +46,9 @@
   <div
     class="col-12 d-flex justify-content-center justify-content-md-end gap-3"
   >
-    <button class="btn btn-primary" (click)="formSubmit()">Add Product</button>
-    <button class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+    <button class="btn btn-primary" (click)="formSubmit()">
+      {{ this.data.title }} Product
+    </button>
+    <button class="btn btn-danger" (click)="onNoClick()">Close</button>
   </div>
 </mat-dialog-actions>

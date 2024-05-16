@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -17,6 +18,11 @@ import {
 } from '@angular/material/dialog';
 import { environment } from '../../../../../env/environment';
 import { ApiService } from '../../../api.service';
+
+export interface DialogData {
+  title: string;
+  item: any | undefined;
+}
 
 @Component({
   selector: 'app-add',
@@ -40,11 +46,13 @@ export class AddComponent implements OnInit {
   submitted = false;
   formData: any;
   url = environment.apiUrl;
+  productId = '';
 
   constructor(
     private apiService: ApiService,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddComponent>
+    public dialogRef: MatDialogRef<AddComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
   ngOnInit(): void {
@@ -53,10 +61,24 @@ export class AddComponent implements OnInit {
       tags: [''],
       description: [''],
     });
+    console.log(this.data);
+    if (this.data.item && this.data.item._id) {
+      this.productId = this.data.item._id;
+      this.updateFormFields(this.data.item);
+    }
   }
 
   get f() {
     return this.addProductForm.controls;
+  }
+
+  updateFormFields(item: any) {
+    this.addProductForm = this.fb.group({
+      _id: item._id,
+      productName: [item.productName, [Validators.required]],
+      tags: [item.tags],
+      description: [item.description],
+    });
   }
 
   formSubmit() {
@@ -67,13 +89,24 @@ export class AddComponent implements OnInit {
 
     this.formData = this.addProductForm.value;
 
-    this.apiService
-      .postData(this.url + 'product/add', this.formData)
-      .subscribe((response) => {
-        if (response.status === 200) {
-          this.dialogRef.close({ status: true, response });
-        }
-      });
+    if (this.productId === '') {
+      this.apiService
+        .postData(this.url + 'product/add', this.formData)
+        .subscribe((response) => {
+          if (response.status === 200) {
+            this.dialogRef.close({ status: true, response });
+          }
+        });
+    } else {
+      this.apiService
+        .postData(this.url + 'product/updateById', this.formData)
+        .subscribe((response) => {
+          if (response.status === 200) {
+            this.dialogRef.close({ status: true, response });
+          }
+        });
+      console.log(this.formData);
+    }
   }
 
   onNoClick(): void {

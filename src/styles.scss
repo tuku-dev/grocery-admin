@@ -39,6 +39,9 @@ body {
 .bg-success .mdc-snackbar__surface {
   background-color: var(--bs-green) !important;
 }
+.bg-danger .mdc-snackbar__surface {
+  background-color: var(--bs-danger) !important;
+}
 
 .table .slno {
   width: 70px;
@@ -57,7 +60,7 @@ body {
     width: max-content;
     right: 50px;
     .btn {
-      border-radius: 0;
+      // border-radius: 0;
       outline: 0;
       box-shadow: none;
       color: var(--bs-white);
