@@ -29,7 +29,7 @@
             *ngFor="let date of item.dates"
             (click)="fetchData(date)"
           >
-            {{ date | date : "mediumDate" }}
+            {{ global.date(date, "MMM DD, YYYY") }}
           </div>
         </div>
       </div>

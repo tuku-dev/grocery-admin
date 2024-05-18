@@ -5,36 +5,47 @@
 <mat-dialog-content>
   <form class="adding-form" [formGroup]="addGroceryForm">
     <div class="row mx-0">
-      <div class="col-12 col-md-6 mb-3">
-        <label for="productName" class="form-label">Search Product</label
-        ><input
+      <div class="col-12 col-md-6 mb-3 relative">
+        <label for="productName" class="form-label">Search Product</label>
+        <input
           type="text"
           name="productName"
           id="productName"
-          formControlName="productName"
+          [(ngModel)]="productName"
           class="form-control form-input"
           placeholder="Search Product"
+          [ngModelOptions]="{ standalone: true }"
+          (keyup)="onChangeSearch($event)"
+          (blur)="onBlur()"
+          [ngClass]="{ 'is-invalid': submitted && f.productId.value === '' }"
+          autocomplete="off"
         />
-      </div>
-      <div class="col-12 col-md-6 mb-3">
-        <label for="unit" class="form-label">Unit</label
-        ><select
-          type="text"
-          name="unit"
-          id="unit"
-          formControlName="unit"
-          class="form-select"
-          (change)="calculate()"
+        <div
+          class="invalid-feedback"
+          *ngIf="submitted && f.productId.value === ''"
         >
-          <option value="">Select Unit</option>
-          <option value="kg">KG</option>
-          <option value="ltr">Liter</option>
-          <option value="pkt">Pocket</option>
-        </select>
+          Product name is required
+        </div>
+        <ul class="product-list border shadow-sm" *ngIf="toggleAutoComplete">
+          <li
+            class="product border-bottom"
+            *ngFor="let item of productData; let i = index"
+            [ngClass]="{ focused: i === currentFocus }"
+            (click)="selectEvent(item)"
+          >
+            {{ item.productName }}
+          </li>
+        </ul>
       </div>
+      <input
+        type="hidden"
+        name="productId"
+        id="productId"
+        formControlName="productId"
+      />
       <div class="col-12 col-md-6 mb-3">
-        <label for="quantity" class="form-label">Quantity</label
-        ><input
+        <label for="quantity" class="form-label">Quantity</label>
+        <input
           type="number"
           name="quantity"
           id="quantity"
@@ -42,11 +53,40 @@
           class="form-control form-input"
           placeholder="Quantity"
           (keyup)="calculate()"
+          autocomplete="off"
+          [ngClass]="{ 'is-invalid': submitted && f.quantity.value === '' }"
         />
+        <div
+          class="invalid-feedback"
+          *ngIf="submitted && f.quantity.value === ''"
+        >
+          Quantity is required
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <label for="totalPrice" class="form-label">Total Price</label
-        ><input
+        <label for="unit" class="form-label">Unit</label>
+        <select
+          type="text"
+          name="unit"
+          id="unit"
+          formControlName="unit"
+          class="form-select"
+          (change)="calculate()"
+          [ngClass]="{ 'is-invalid': submitted && f.unit.value === '' }"
+        >
+          <option value="">Select Unit</option>
+          <option value="kg">KG</option>
+          <option value="ltr">Liter</option>
+          <option value="pkt">Pocket</option>
+          <option value="pcs">Pieces</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="submitted && f.unit.value === ''">
+          Unit is required
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <label for="totalPrice" class="form-label">Total Price</label>
+        <input
           type="text"
           name="totalPrice"
           id="totalPrice"
@@ -54,11 +94,19 @@
           class="form-control form-input"
           placeholder="Total Price"
           (keyup)="calculate()"
+          autocomplete="off"
+          [ngClass]="{ 'is-invalid': submitted && f.totalPrice.value === '' }"
         />
+        <div
+          class="invalid-feedback"
+          *ngIf="submitted && f.totalPrice.value === ''"
+        >
+          Total Price is required
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <label for="pricePerUnit" class="form-label">Price Per Unit</label
-        ><input
+        <label for="pricePerUnit" class="form-label">Price Per Unit</label>
+        <input
           type="text"
           name="pricePerUnit"
           id="pricePerUnit"
@@ -66,17 +114,19 @@
           class="form-control form-input"
           placeholder="Price Per Unit"
           (keyup)="calculate()"
+          autocomplete="off"
         />
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <label for="dateOfPurchase" class="form-label">Date</label
-        ><input
+        <label for="dateOfPurchase" class="form-label">Date</label>
+        <input
           type="date"
           name="dateOfPurchase"
           id="dateOfPurchase"
           formControlName="dateOfPurchase"
           class="form-control form-input"
           placeholder="Date"
+          autocomplete="off"
         />
       </div>
       <div class="col-Description12">
@@ -87,7 +137,8 @@
           formControlName="description"
           class="form-control form-textarea"
           placeholder="Description"
-        ></textarea>
+        >
+        </textarea>
       </div>
     </div>
   </form>

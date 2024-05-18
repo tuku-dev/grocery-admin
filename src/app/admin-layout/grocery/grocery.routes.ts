@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
-import { ListComponent } from './list/list.component';
-import { GroceryComponent } from './grocery.component';
-import { AddComponent } from './add/add.component';
 import { ByDateComponent } from './by-date/by-date.component';
+import { ListComponent } from './list/list.component';
 
 export const GroceryRoutes: Routes = [
   {
@@ -10,7 +8,6 @@ export const GroceryRoutes: Routes = [
     // component: GroceryComponent,
     children: [
       { path: 'list', component: ListComponent },
-      { path: 'add', component: AddComponent },
       { path: 'by-date', component: ByDateComponent },
     ],
   },

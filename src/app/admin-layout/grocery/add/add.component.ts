@@ -16,13 +16,39 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import moment from 'moment';
 import { environment } from '../../../../../env/environment';
 import { ApiService } from '../../../api.service';
-import moment from 'moment';
 
 export interface DialogData {
   title: string;
   item: any | undefined;
+}
+
+export interface groceryData {
+  _id: string;
+  productId: string;
+  dateOfPurchase: string;
+  pricePerUnit: number;
+  unit: string;
+  quantity: number;
+  totalPrice: number;
+  active: boolean;
+  deleted: boolean;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  productData: {
+    _id: string;
+    productName: string;
+    description: string;
+    tags: string;
+    active: boolean;
+    deleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+  slno: 1;
 }
 
 @Component({
@@ -48,7 +74,12 @@ export class AddComponent implements OnInit {
   formData: any;
   url = environment.apiUrl;
   groceryId = '';
-  todayDate = moment(new Date()).format('YYYY-mm-DD');
+  todayDate = moment(new Date()).format('YYYY-MM-DD');
+  keyword = 'name';
+  productData: any = [];
+  productName: string = '';
+  toggleAutoComplete: boolean = false;
+  currentFocus: number = -1;
 
   constructor(
     private apiService: ApiService,
@@ -58,21 +89,76 @@ export class AddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(moment(new Date()).format('YYYY-mm-DD'));
-
     this.addGroceryForm = this.fb.group({
-      productName: [''],
-      unit: [''],
-      quantity: [''],
-      totalPrice: [''],
+      productId: ['', [Validators.required]],
+      unit: ['', [Validators.required]],
+      quantity: ['', [Validators.required]],
+      totalPrice: ['', [Validators.required]],
       pricePerUnit: [''],
       dateOfPurchase: [this.todayDate],
       description: [''],
     });
+    // console.log(this.data);
+    if (this.data.item && this.data.item._id) {
+      this.updateFormFields(this.data.item);
+    }
   }
 
   get f() {
     return this.addGroceryForm.controls;
+  }
+
+  updateFormFields(item: groceryData) {
+    this.groceryId = item._id;
+    this.selectEvent(item.productData);
+
+    this.addGroceryForm = this.fb.group({
+      _id: item._id,
+      productId: [item.productId, [Validators.required]],
+      unit: [item.unit, [Validators.required]],
+      quantity: [item.quantity, [Validators.required]],
+      totalPrice: [item.totalPrice, [Validators.required]],
+      pricePerUnit: [item.pricePerUnit],
+      dateOfPurchase: [moment(item.dateOfPurchase).format('YYYY-MM-DD')],
+      description: [item.description],
+    });
+  }
+
+  onChangeSearch(event: KeyboardEvent) {
+    if (this.productName) {
+      this.apiService
+        .postData(this.url + 'product/getProductByName', {
+          name: this.productName,
+        })
+        .subscribe((response) => {
+          this.productData = response.data;
+          this.toggleAutoComplete = this.productData.length > 0;
+        });
+    }
+
+    if (event.key === 'ArrowDown') {
+      this.currentFocus = (this.currentFocus + 1) % this.productData.length;
+    } else if (event.key === 'ArrowUp') {
+      this.currentFocus =
+        (this.currentFocus - 1 + this.productData.length) %
+        this.productData.length;
+    } else if (event.key === 'Enter' && this.currentFocus >= 0) {
+      this.selectEvent(this.productData[this.currentFocus]);
+      return;
+    }
+  }
+
+  selectEvent(item: any) {
+    this.addGroceryForm.controls.productId.setValue(item._id);
+    this.productName = item.productName;
+    this.toggleAutoComplete = false;
+    this.currentFocus = -1; // Reset the focus index
+  }
+
+  onBlur(): void {
+    setTimeout(() => {
+      this.toggleAutoComplete = false;
+    }, 100); // Delay to allow click event to register
   }
 
   calculate() {
@@ -94,29 +180,31 @@ export class AddComponent implements OnInit {
   }
 
   formSubmit() {
-    // console.log(this.addProductForm.value);
     this.submitted = true;
 
     if (this.addGroceryForm.invalid) return;
+    // console.log(this.addGroceryForm.value);
 
     this.formData = this.addGroceryForm.value;
-
+    this.formData.dateOfPurchase = moment(this.formData.dateOfPurchase).startOf(
+      'day'
+    );
     if (this.groceryId === '') {
-      // this.apiService
-      //   .postData(this.url + 'product/add', this.formData)
-      //   .subscribe((response) => {
-      //     if (response.status === 200) {
-      //       this.dialogRef.close({ status: true, response });
-      //     }
-      //   });
+      this.apiService
+        .postData(this.url + 'grocery/add', this.formData)
+        .subscribe((response) => {
+          if (response.status === 200) {
+            this.dialogRef.close({ status: true, response });
+          }
+        });
     } else {
-      // this.apiService
-      //   .postData(this.url + 'product/updateById', this.formData)
-      //   .subscribe((response) => {
-      //     if (response.status === 200) {
-      //       this.dialogRef.close({ status: true, response });
-      //     }
-      //   });
+      this.apiService
+        .postData(this.url + 'grocery/updateById', this.formData)
+        .subscribe((response) => {
+          if (response.status === 200) {
+            this.dialogRef.close({ status: true, response });
+          }
+        });
       // console.log(this.formData);
     }
   }

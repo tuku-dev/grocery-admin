@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../../env/environment';
 import { ApiService } from '../../../api.service';
 import { GlobalService } from '../../../global.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-by-date',
@@ -19,7 +20,10 @@ export class ByDateComponent implements OnInit {
   productData: any = [];
   totalAmount = 0;
 
-  constructor(private apiService: ApiService, private global: GlobalService) {}
+  constructor(
+    private apiService: ApiService,
+    protected global: GlobalService
+  ) {}
   url = environment.apiUrl;
 
   ngOnInit(): void {
@@ -55,7 +59,9 @@ export class ByDateComponent implements OnInit {
       .postData(this.url + 'grocery/by-date', { date })
       .subscribe((response) => {
         const result = response.data;
-        console.log(result);
+        result.forEach((x: any) => {
+          x.dateOfPurchase = moment(x.dateOfPurchase).subtract(1, 'day');
+        });
 
         const sum = 0;
         this.totalAmount = result.reduce(

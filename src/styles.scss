@@ -11,6 +11,9 @@ body {
 .work-area {
   position: relative;
 }
+.relative {
+  position: relative !important;
+}
 .pagination {
   display: flex;
   align-items: center;

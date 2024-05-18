@@ -8,11 +8,14 @@ import { environment } from '../../../../../env/environment';
 import { ApiService } from '../../../api.service';
 import { GlobalService } from '../../../global.service';
 import { AddComponent } from '../add/add.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ViewComponent } from '../view/view.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule, MatIconModule],
   providers: [ApiService],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -25,10 +28,13 @@ export class ListComponent implements OnInit {
   pager = 0;
   fetchData: any;
   filter = '';
+  openAction = '';
+  prevAction = '';
+  clicked = 0;
 
   constructor(
     private apiService: ApiService,
-    private global: GlobalService,
+    protected global: GlobalService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {}
@@ -36,7 +42,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPage('first');
-    this.openAddGroceryForm();
   }
 
   fetchApi(fetchData: any) {
@@ -44,7 +49,6 @@ export class ListComponent implements OnInit {
       .postData(this.url + 'grocery/list', fetchData)
       .subscribe((response) => {
         const result = response.data;
-        console.log(response);
 
         if (response.status === 200) {
           this.productData = this.global.slno(
@@ -52,6 +56,11 @@ export class ListComponent implements OnInit {
             this.page,
             this.recordsPerPage
           );
+          // this.productData.forEach((x: any) => {
+          //   x.dateOfPurchase = moment(x.dateOfPurchase)
+          //     .subtract(1, 'day')
+          //     .format('YYYY-MM-DD');
+          // });
 
           this.totalRecord = result.totalRecord;
           this.pager = Math.ceil(this.totalRecord / this.recordsPerPage);
@@ -106,4 +115,46 @@ export class ListComponent implements OnInit {
     this.filter = '';
     this.fetchPage('first');
   }
+
+  toggleAction(id: string) {
+    this.openAction = id;
+    if (this.prevAction === id) {
+      this.clicked = 0;
+      this.prevAction = '';
+    } else {
+      this.clicked = 1;
+      this.prevAction = id;
+    }
+  }
+  viewProduct(item: any) {
+    this.dialog.open(ViewComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {
+        title: 'View',
+        item,
+      },
+    });
+  }
+  editProduct(item: any) {
+    let dialogRef = this.dialog.open(AddComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {
+        title: 'Update',
+        item,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.status && result.status !== undefined) {
+        this.fetchPage('first');
+        this._snackBar.open('Product Updated', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['bg-success'],
+        });
+      }
+    });
+  }
+  deleteProduct(item: any) {}
 }

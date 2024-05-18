@@ -1,0 +1,19 @@
+.product-list {
+  padding: 0;
+  position: absolute;
+  left: calc(var(--bs-gutter-x) * 0.5);
+  right: calc(var(--bs-gutter-x) * 0.5);
+  top: 100%;
+  background: var(--bs-gray-200);
+  list-style: none;
+  max-height: 200px;
+  overflow: auto;
+  .product {
+    font-size: 85%;
+    padding: 2px 5px;
+    cursor: pointer;
+    &.focused {
+      background: var(--bs-gray-400);
+    }
+  }
+}

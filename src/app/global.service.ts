@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,9 @@ export class GlobalService {
       slno++;
     });
     return data;
+  }
+
+  date(theDate: string, format = 'YYYY-MM-DD') {
+    return moment(theDate).subtract(1, 'day').format(format);
   }
 }
