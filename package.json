@@ -23,8 +23,10 @@
     "@ng-bootstrap/ng-bootstrap": "^16.0.0-rc.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.30.1",
+    "ng2-charts": "^6.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

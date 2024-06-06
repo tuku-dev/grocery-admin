@@ -5,6 +5,7 @@ import moment from 'moment';
   providedIn: 'root',
 })
 export class GlobalService {
+  months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
   constructor() {}
 
   slno(data: [Object], page: number, perPage: number) {

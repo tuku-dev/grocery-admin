@@ -1,1 +1,32 @@
-<p>dashboard works!</p>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <div
+          class="card-title d-flex align-items-center justify-content-between mb-3"
+        >
+          <h3 class="card-title mb-0">Pricing by month</h3>
+          <select
+            name="yearList"
+            id="yearList"
+            class="form-control form-select w-50"
+            [(ngModel)]="theYear"
+            (change)="fetchData()"
+          >
+            <option value="">Select Year</option>
+            <ng-container *ngIf="yearList.length > 0">
+              <option value="{{ year }}" *ngFor="let year of yearList">
+                {{ year }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+        <div class="chart-canvas">
+          <canvas baseChart [data]="lineChartData" [type]="'line'"> </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6"></div>
+  <div class="col-12 col-md-6"></div>
+</div>
