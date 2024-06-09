@@ -62,7 +62,7 @@ export class DashboardComponent {
         if (response.status === 200) {
           response.data.yearData.forEach((item: any) => {
             priceList.push(item.totalPrice);
-            monthList.push(this.global.months[item.month]);
+            monthList.push(this.global.months[item.month - 1]);
           });
           this.preparePricePerMonth({
             priceList,
