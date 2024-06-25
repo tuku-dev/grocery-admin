@@ -1,0 +1,83 @@
+<div class="wrapper">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-heading h1 text-capitalize mb-3">grocery list by Month</h1>
+
+    <div
+      class="year-month-container d-flex align-items-center justify-content-end gap-3"
+    >
+      <button
+        class="btn bg-danger bg-opacity-50 shadow-sm text-white btn-add-grocery"
+        (click)="openAddGroceryForm()"
+      >
+        Add Grocery
+      </button>
+      <select name="years" id="years" [(ngModel)]="theYear" class="form-select">
+        <option *ngFor="let year of years" value="{{ year }}">
+          {{ year }}
+        </option>
+      </select>
+      <div class="months-container" #wrapper>
+        <div
+          class="form-select relative"
+          (click)="toggleMonths = !toggleMonths"
+          *ngIf="months.length"
+        >
+          {{ theMonth }}
+          <div
+            class="months-list card p-3 d-flex align-items-start justify-content-start flex-wrap gap-2 flex-row border"
+            *ngIf="toggleMonths"
+          >
+            <span
+              class="month shadow-sm px-2 py-1"
+              *ngFor="let month of months"
+              (click)="updateMonth(month)"
+            >
+              {{ month }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="search-product d-flex align-items-center justify-content-start gap-3"
+      >
+        <button
+          class="btn btn-filter bg-danger bg-opacity-50 text-white"
+          type="button"
+          (click)="searchGrocery()"
+        >
+          Filter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grocery listing -->
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="slno">#SLNO</th>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th class="text-end">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of productData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.dateOfPurchase | date : "mediumDate" }}</td>
+        <td>{{ item.productData?.productName }}</td>
+        <td>{{ item.quantity }} {{ item.unit }}</td>
+        <td>{{ item.totalPrice }}</td>
+        <td class="text-end">Action</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4" class="text-end">Total Amount</th>
+        <th colspan="2">{{ totalAmount }}</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

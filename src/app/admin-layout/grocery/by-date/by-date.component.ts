@@ -52,7 +52,6 @@ export class ByDateComponent implements OnInit {
   }
 
   fetchData(date: string) {
-    console.log(date);
     this.years.forEach((x: any) => (x.show = false));
     this.toggleDates = false;
     this.apiService

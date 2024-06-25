@@ -24,7 +24,7 @@ export class ListComponent implements OnInit {
   productData: any = [];
   totalRecord = 0;
   page = 1;
-  recordsPerPage = 10;
+  recordsPerPage = 0;
   pager = 0;
   fetchData: any;
   filter = '';
@@ -41,7 +41,17 @@ export class ListComponent implements OnInit {
   url = environment.apiUrl;
 
   ngOnInit(): void {
+    this.getSettings();
     this.fetchPage('first');
+  }
+
+  getSettings() {
+    this.apiService
+      .postData(this.url + 'grocery/settings', {})
+      .subscribe((response) => {
+        console.log(response);
+        this.recordsPerPage = response.data.perPage;
+      });
   }
 
   fetchApi(fetchData: any) {
