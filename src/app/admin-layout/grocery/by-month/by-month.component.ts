@@ -9,12 +9,14 @@ import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddComponent } from '../add/add.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewComponent } from '../view/view.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-by-month',
   templateUrl: './by-month.component.html',
   styleUrls: ['./by-month.component.scss'],
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule, MatIconModule],
   standalone: true,
   providers: [ApiService],
 })
@@ -27,6 +29,9 @@ export class ByMonthComponent implements OnInit {
   theMonth = moment(new Date()).format('MMM');
   totalAmount = 0;
   productData: any = [];
+  openAction = '';
+  prevAction = '';
+  clicked = 0;
 
   @ViewChild('wrapper', { static: true }) wrapper: ElementRef | undefined;
 
@@ -107,4 +112,46 @@ export class ByMonthComponent implements OnInit {
       }
     });
   }
+
+  toggleAction(id: string) {
+    this.openAction = id;
+    if (this.prevAction === id) {
+      this.clicked = 0;
+      this.prevAction = '';
+    } else {
+      this.clicked = 1;
+      this.prevAction = id;
+    }
+  }
+  viewProduct(item: any) {
+    this.dialog.open(ViewComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {
+        title: 'View',
+        item,
+      },
+    });
+  }
+  editProduct(item: any) {
+    let dialogRef = this.dialog.open(AddComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {
+        title: 'Update',
+        item,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.status && result.status !== undefined) {
+        this.searchGrocery();
+        this._snackBar.open('Product Updated', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['bg-success'],
+        });
+      }
+    });
+  }
+  deleteProduct(item: any) {}
 }

@@ -70,7 +70,32 @@
         <td>{{ item.productData?.productName }}</td>
         <td>{{ item.quantity }} {{ item.unit }}</td>
         <td>{{ item.totalPrice }}</td>
-        <td class="text-end">Action</td>
+        <td class="text-end py-0 actions">
+          <span
+            class="actions-list card border d-inline-flex align-items-center justify-content-center px-1 bg-dark pointer text-white mt-1"
+            (click)="toggleAction(item._id)"
+          >
+            <mat-icon
+              aria-hidden="false"
+              aria-label="More actions"
+              fontIcon="more_horiz"
+            ></mat-icon>
+          </span>
+          <div
+            class="action-buttons d-flex align-items-center justify-content-end gap-1"
+            *ngIf="openAction === item._id && clicked !== 0"
+          >
+            <button class="btn btn-view" (click)="viewProduct(item)">
+              View
+            </button>
+            <button class="btn btn-edit" (click)="editProduct(item)">
+              Edit
+            </button>
+            <button class="btn btn-delete" (click)="deleteProduct(item)">
+              Delete
+            </button>
+          </div>
+        </td>
       </tr>
     </tbody>
     <tfoot>

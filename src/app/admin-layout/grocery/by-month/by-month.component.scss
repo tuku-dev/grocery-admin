@@ -6,6 +6,10 @@
     position: absolute;
     top: 100%;
     max-width: 350px;
+    z-index: 9;
+    .month {
+      cursor: pointer;
+    }
   }
   .btn-add-grocery {
     min-width: 120px;
