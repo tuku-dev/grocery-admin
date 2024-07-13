@@ -59,7 +59,7 @@ export class ByDateComponent implements OnInit {
       .subscribe((response) => {
         const result = response.data;
         result.forEach((x: any) => {
-          x.dateOfPurchase = moment(x.dateOfPurchase).subtract(1, 'day');
+          x.dateOfPurchase = moment(x.dateOfPurchase);
         });
 
         const sum = 0;
