@@ -59,6 +59,7 @@
         <th>Date</th>
         <th>Name</th>
         <th>Quantity</th>
+        <th>Description</th>
         <th>Price</th>
         <th class="text-end">Action</th>
       </tr>
@@ -69,6 +70,7 @@
         <td>{{ item.dateOfPurchase | date : "mediumDate" }}</td>
         <td>{{ item.productData?.productName }}</td>
         <td>{{ item.quantity }} {{ item.unit }}</td>
+        <td>{{ item.description }}</td>
         <td>{{ item.totalPrice }}</td>
         <td class="text-end py-0 actions">
           <span
@@ -100,7 +102,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <th colspan="4" class="text-end">Total Amount</th>
+        <th colspan="5" class="text-end">Total Amount</th>
         <th colspan="2">{{ totalAmount }}</th>
       </tr>
     </tfoot>
