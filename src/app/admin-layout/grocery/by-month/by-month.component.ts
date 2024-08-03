@@ -60,7 +60,7 @@ export class ByMonthComponent implements OnInit {
 
   getSettings() {
     this.apiService
-      .postData(this.url + 'grocery/settings', {})
+      .postModule(this.url + 'grocery/settings', {})
       .subscribe((response) => {
         this.recordsPerPage = response.data.perPage;
         this.months = response.data.monthShort;
@@ -69,7 +69,7 @@ export class ByMonthComponent implements OnInit {
 
   getYears() {
     this.apiService
-      .postData(this.url + 'grocery/year-list', {})
+      .postModule(this.url + 'grocery/year-list', {})
       .subscribe((response) => {
         this.years = response.data;
       });
@@ -81,7 +81,7 @@ export class ByMonthComponent implements OnInit {
 
   searchGrocery() {
     this.apiService
-      .postData(this.url + 'grocery/by-month', {
+      .postModule(this.url + 'grocery/by-month', {
         year: this.theYear,
         month: this.theMonth,
       })

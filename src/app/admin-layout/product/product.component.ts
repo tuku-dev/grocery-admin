@@ -68,7 +68,7 @@ export class ProductComponent {
 
   getSettings() {
     this.apiService
-      .postData(this.url + 'grocery/settings', {})
+      .postModule(this.url + 'grocery/settings', {})
       .subscribe((response) => {
         console.log(response);
         this.recordsPerPage = response.data.perPage;
@@ -77,7 +77,7 @@ export class ProductComponent {
 
   fetchApi(fetchData: any) {
     this.apiService
-      .postData(this.url + 'product/list', fetchData)
+      .postModule(this.url + 'product/list', fetchData)
       .subscribe((response) => {
         const result = response.data;
         if (response.status === 200) {

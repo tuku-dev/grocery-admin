@@ -47,7 +47,7 @@ export class ListComponent implements OnInit {
 
   getSettings() {
     this.apiService
-      .postData(this.url + 'grocery/settings', {})
+      .postModule(this.url + 'grocery/settings', {})
       .subscribe((response) => {
         console.log(response);
         this.recordsPerPage = response.data.perPage;
@@ -56,7 +56,7 @@ export class ListComponent implements OnInit {
 
   fetchApi(fetchData: any) {
     this.apiService
-      .postData(this.url + 'grocery/list', fetchData)
+      .postModule(this.url + 'grocery/list', fetchData)
       .subscribe((response) => {
         const result = response.data;
 

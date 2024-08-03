@@ -91,7 +91,7 @@ export class AddComponent implements OnInit {
 
     if (this.productId === '') {
       this.apiService
-        .postData(this.url + 'product/add', this.formData)
+        .postModule(this.url + 'product/add', this.formData)
         .subscribe((response) => {
           if (response.status === 200) {
             this.dialogRef.close({ status: true, response });
@@ -99,7 +99,7 @@ export class AddComponent implements OnInit {
         });
     } else {
       this.apiService
-        .postData(this.url + 'product/updateById', this.formData)
+        .postModule(this.url + 'product/updateById', this.formData)
         .subscribe((response) => {
           if (response.status === 200) {
             this.dialogRef.close({ status: true, response });

@@ -45,7 +45,7 @@ export class DashboardComponent {
 
   getYears() {
     this.apiService
-      .postData(this.url + 'dashboard/year-list', {})
+      .postModule(this.url + 'dashboard/year-list', {})
       .subscribe((response) => {
         if (response.status === 200) {
           this.yearList = response.data;
@@ -55,7 +55,7 @@ export class DashboardComponent {
 
   fetchData() {
     this.apiService
-      .postData(this.url + 'dashboard/year-data', { year: this.theYear })
+      .postModule(this.url + 'dashboard/year-data', { year: this.theYear })
       .subscribe((response) => {
         let priceList: any = [];
         let monthList: any = [];
@@ -111,7 +111,7 @@ export class DashboardComponent {
 
   getPricingPerMonth() {
     this.apiService
-      .postData(this.url + 'dashboard/sum-by-dates', {
+      .postModule(this.url + 'dashboard/sum-by-dates', {
         page: 1,
         perPage: 12,
       })

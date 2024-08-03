@@ -127,7 +127,7 @@ export class AddComponent implements OnInit {
   onChangeSearch(event: KeyboardEvent) {
     if (this.productName) {
       this.apiService
-        .postData(this.url + 'product/getProductByName', {
+        .postModule(this.url + 'product/getProductByName', {
           name: this.productName,
         })
         .subscribe((response) => {
@@ -191,7 +191,7 @@ export class AddComponent implements OnInit {
     );
     if (this.groceryId === '') {
       this.apiService
-        .postData(this.url + 'grocery/add', this.formData)
+        .postModule(this.url + 'grocery/add', this.formData)
         .subscribe((response) => {
           if (response.status === 200) {
             this.dialogRef.close({ status: true, response });
@@ -199,7 +199,7 @@ export class AddComponent implements OnInit {
         });
     } else {
       this.apiService
-        .postData(this.url + 'grocery/updateById', this.formData)
+        .postModule(this.url + 'grocery/updateById', this.formData)
         .subscribe((response) => {
           if (response.status === 200) {
             this.dialogRef.close({ status: true, response });
