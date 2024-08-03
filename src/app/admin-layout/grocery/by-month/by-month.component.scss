@@ -5,8 +5,10 @@
   .months-list {
     position: absolute;
     top: 100%;
-    max-width: 350px;
+    right: 0;
     z-index: 9;
+    width: 240px;
+    grid-template-columns: repeat(4, 1fr);
     .month {
       cursor: pointer;
     }
